@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1031996790155",
+    "project_id": "patitasvivas-1309b",
+    "storage_bucket": "patitasvivas-1309b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031996790155:android:f48ddf50aae7c0258d0b8e",
+        "android_client_info": {
+          "package_name": "com.example.patitasvivas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmu7z50qiSNUuGGwJJTaZN9gtbkGTTXH4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
