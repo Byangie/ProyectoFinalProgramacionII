@@ -35,7 +35,7 @@ fun Navegacion(navHostController: NavHostController, auth: FirebaseAuth) {
         composable("Menu") {
             Menus(auth, navHostController)
         }
-
+//Cerrando_Sesion
         composable("CerrarSesion") {
             GraciasScreen(onCerrarSesion = {
                 auth.signOut() // Cerrar sesión usando FirebaseAuth
