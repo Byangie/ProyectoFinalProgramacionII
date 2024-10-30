@@ -12,6 +12,7 @@ import com.example.patitasvivas.Presentacion.Menu.Menus
 import com.example.patitasvivas.Presentacion.Signup.Signup
 import com.google.firebase.auth.FirebaseAuth
 
+
 @Composable
 fun Navegacion(navHostController: NavHostController, auth: FirebaseAuth) {
     NavHost(navController = navHostController, startDestination = "INICIO") {
@@ -31,6 +32,7 @@ fun Navegacion(navHostController: NavHostController, auth: FirebaseAuth) {
         composable("Signup") {
             Signup(auth, navHostController)
         }
+
 
         composable("Menu") {
             Menus(auth, navHostController)

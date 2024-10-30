@@ -30,151 +30,207 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
-// fun es una funcion
-//funcion que se encarga de crear Signup de la aplicacion
-fun Signup(auth: FirebaseAuth,navHostController: NavHostController) {
-    var scroll = rememberScrollState() // Crea un estado para el desplazamiento vertical.
-    var email by remember { mutableStateOf("") } // Estado para almacenar el email ingresado.
-    var contraseña by remember { mutableStateOf("") } // Estado para almacenar la contraseña ingresada.
-    var Experiencia by remember { mutableStateOf("") } // Estado para almacenar la experiencia del usuario.
-    var Interes by remember { mutableStateOf("") } // Estado para almacenar los intereses del usuario.
-    var Nombre by remember { mutableStateOf("") } // Estado para almacenar el nombre del usuario.
-    var ServiciosOfrecidos by remember { mutableStateOf("") } // Estado para almacenar los servicios ofrecidos.
-    var ServiciosInteres by remember { mutableStateOf("") } // Estado para almacenar los servicios de interés.
+fun Signup(auth: FirebaseAuth, navHostController: NavHostController) {
+    var scroll = rememberScrollState() // Estado para el desplazamiento vertical.
+    var email by remember { mutableStateOf("") } // Estado para almacenar el email.
+    var contraseña by remember { mutableStateOf("") } // Estado para almacenar la contraseña.
+    var experiencia by remember { mutableStateOf("") } // Estado para almacenar la experiencia del usuario.
+    var interes by remember { mutableStateOf("") } // Estado para almacenar los intereses del usuario.
+    var nombre by remember { mutableStateOf("") } // Estado para almacenar el nombre del usuario.
+    var serviciosOfrecidos by remember { mutableStateOf("") } // Estado para almacenar los servicios ofrecidos.
+    var serviciosInteres by remember { mutableStateOf("") } // Estado para almacenar los servicios de interés.
     var dialogTitle by remember { mutableStateOf("") } // Título del diálogo de alerta.
     var dialogText by remember { mutableStateOf("") } // Texto del diálogo de alerta.
     var show by rememberSaveable { mutableStateOf(false) } // Estado para controlar la visibilidad del diálogo de alerta.
-    var IdUsuario by remember { mutableStateOf("") } // Estado para almacenar el ID del usuario.
+    var idUsuario by remember { mutableStateOf("") } // Estado para almacenar el ID del usuario.
 
-    Column(modifier = Modifier.fillMaxSize().background(Black).verticalScroll(scroll), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Black)
+            .verticalScroll(scroll),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Row() {
-            // Crea un botón para volver, se debe importar antes en la carpeta drawable.
-            Icon(painter = painterResource(id = R.drawable.back), contentDescription = "", tint = White, modifier = Modifier.padding(24.dp).clickable { navHostController.popBackStack() })
+            // Botón para volver a la pantalla anterior.
+            Icon(
+                painter = painterResource(id = R.drawable.back),
+                contentDescription = "",
+                tint = White,
+                modifier = Modifier.padding(24.dp).clickable { navHostController.popBackStack() }
+            )
             Spacer(Modifier.weight(1f)) // Espaciador para separar el icono del borde.
         }
 
-        // Crea el texto del Email para identificar.
+        // TextField para el email.
         Text("Email", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        // Crea el TextField del Email para ingresar el dato.
-        TextField(value = email, onValueChange = { email = it }, modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)) // Cambiar colores del campo.
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
+        )
 
         Spacer(Modifier.height(40.dp)) // Espaciador para separar campos.
 
-        // Repite el proceso para la contraseña, experiencia, interés, nombre, servicios ofrecidos, y servicios de interés.
+        // TextField para la contraseña.
         Text("Contraseña", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(value = contraseña, onValueChange = { contraseña = it }, modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField))
+        TextField(
+            value = contraseña,
+            onValueChange = { contraseña = it },
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
+        )
 
         Spacer(Modifier.height(40.dp))
 
+        // TextField para la experiencia.
         Text("Experiencia", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(value = Experiencia, onValueChange = { Experiencia = it }, modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField))
+        TextField(
+            value = experiencia,
+            onValueChange = { experiencia = it },
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
+        )
 
         Spacer(Modifier.height(40.dp))
 
-        Text("Interes", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(value = Interes, onValueChange = { Interes = it }, modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField))
+        // TextField para el interés.
+        Text("Interés", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
+        TextField(
+            value = interes,
+            onValueChange = { interes = it },
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
+        )
 
         Spacer(Modifier.height(40.dp))
 
+        // TextField para el nombre.
         Text("Nombre", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(value = Nombre, onValueChange = { Nombre = it }, modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField))
+        TextField(
+            value = nombre,
+            onValueChange = { nombre = it },
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
+        )
 
         Spacer(Modifier.height(40.dp))
 
+        // TextField para los servicios ofrecidos.
         Text("Servicios Ofrecidos", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(value = ServiciosOfrecidos, onValueChange = { ServiciosOfrecidos = it }, modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField))
+        TextField(
+            value = serviciosOfrecidos,
+            onValueChange = { serviciosOfrecidos = it },
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
+        )
 
         Spacer(Modifier.height(40.dp))
 
-        Text("Servicios Interes", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(value = ServiciosInteres, onValueChange = { ServiciosInteres = it }, modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField))
+        // TextField para los servicios de interés.
+        Text("Servicios Interés", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
+        TextField(
+            value = serviciosInteres,
+            onValueChange = { serviciosInteres = it },
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
+        )
 
         // Lógica del botón para registrarse.
         Spacer(Modifier.height(40.dp))
-        Button(onClick = {
-            // Verificar que la contraseña tenga al menos 8 caracteres.
-            if (contraseña.length < 8) {
-                show = true
-                dialogTitle = "Alerta"
-                dialogText = "La contraseña debe tener al menos 8 caracteres"
-            } else {
-                if (email.isNotEmpty() && contraseña.isNotEmpty()) { // Verificar que email y contraseña no estén vacíos.
-                    auth.createUserWithEmailAndPassword(email, contraseña).addOnCompleteListener { task ->
-                        if (task.isSuccessful) { // Si el registro es exitoso.
-                            IdUsuario = auth.currentUser?.uid.toString() // Obtener el ID del usuario.
-                            if (Experiencia.isNotEmpty() && ServiciosInteres.isNotEmpty() && Interes.isNotEmpty() && Nombre.isNotEmpty() && ServiciosOfrecidos.isNotEmpty()) {
-                                // Conectar a Firestore y crear el registro de usuario.
-                                val db = FirebaseFirestore.getInstance().collection("UsersProfile")
-                                val dat = DatosUsuario( // Crear la instancia de los datos del usuario.
-                                    Experiencia,
-                                    Interes,
-                                    Nombre,
-                                    ServiciosOfrecidos,
-                                    ServiciosInteres,
-                                    email,
-                                    IdUsuario
-                                )
-                                db.document().set(dat) // Guardar el nuevo registro en Firestore.
-                                // Mostrar mensaje de éxito.
-                                show = true
-                                dialogTitle = "Alerta"
-                                dialogText = "Registro Exitoso"
-                                // Limpiar campos después del registro exitoso.
-                                Experiencia = ""
-                                Interes = ""
-                                Nombre = ""
-                                ServiciosOfrecidos = ""
-                                ServiciosInteres = ""
-                                email = ""
-                            } else {
-                                // Alertar si hay campos vacíos.
-                                show = true
-                                dialogTitle = "Alerta"
-                                dialogText = "Todos los campos son Obligatorios"
-                            }
-                        } else {
-                            // Manejar errores durante el registro.
-                            val exception = task.exception
-                            if (exception is FirebaseAuthWeakPasswordException) {
-                                show = true
-                                dialogTitle = "Alerta"
-                                dialogText = "La contraseña es demasiado débil"
-                            } else if (exception is FirebaseAuthUserCollisionException) {
-                                show = true
-                                dialogTitle = "Alerta"
-                                dialogText = "El correo ya está registrado"
-                            } else {
-                                show = true
-                                dialogTitle = "Alerta"
-                                dialogText = "Error al registrar: ${exception?.message}"
-                            }
-                        }
-                    }
-                } else {
-                    // Alertar si hay campos vacíos.
+        Button(
+            onClick = {
+                // Verificar que la contraseña tenga al menos 8 caracteres.
+                if (contraseña.length < 8) {
                     show = true
                     dialogTitle = "Alerta"
-                    dialogText = "Todos los campos son Obligatorios"
+                    dialogText = "La contraseña debe tener al menos 8 caracteres"
+                } else {
+                    if (email.isNotEmpty() && contraseña.isNotEmpty()) { // Verificar que email y contraseña no estén vacíos.
+                        auth.createUserWithEmailAndPassword(email, contraseña).addOnCompleteListener { task ->
+                            if (task.isSuccessful) { // Si el registro es exitoso.
+                                idUsuario = auth.currentUser?.uid.toString() // Obtener el ID del usuario.
+                                if (experiencia.isNotEmpty() && serviciosInteres.isNotEmpty() && interes.isNotEmpty() && nombre.isNotEmpty() && serviciosOfrecidos.isNotEmpty()) {
+                                    // Conectar a Firestore y crear el registro de usuario.
+                                    val db = FirebaseFirestore.getInstance().collection("UsersProfile")
+                                    val dat = DatosUsuario( // Crear la instancia de los datos del usuario.
+                                        experiencia,
+                                        interes,
+                                        nombre, // Guardar el nombre en vez de "usuario desconocido".
+                                        serviciosOfrecidos,
+                                        serviciosInteres,
+                                        email,
+                                        idUsuario
+                                    )
+                                    db.document(idUsuario).set(dat) // Guardar el nuevo registro en Firestore utilizando el ID del usuario.
+                                    // Mostrar mensaje de éxito.
+                                    show = true
+                                    dialogTitle = "Alerta"
+                                    dialogText = "Registro Exitoso"
+                                    // Limpiar campos después del registro exitoso.
+                                    experiencia = ""
+                                    interes = ""
+                                    nombre = ""
+                                    serviciosOfrecidos = ""
+                                    serviciosInteres = ""
+                                    email = ""
+                                } else {
+                                    // Alertar si hay campos vacíos.
+                                    show = true
+                                    dialogTitle = "Alerta"
+                                    dialogText = "Todos los campos son Obligatorios"
+                                }
+                            } else {
+                                // Manejar errores durante el registro.
+                                val exception = task.exception
+                                when (exception) {
+                                    is FirebaseAuthWeakPasswordException -> {
+                                        show = true
+                                        dialogTitle = "Alerta"
+                                        dialogText = "La contraseña es demasiado débil"
+                                    }
+                                    is FirebaseAuthUserCollisionException -> {
+                                        show = true
+                                        dialogTitle = "Alerta"
+                                        dialogText = "El correo ya está registrado"
+                                    }
+                                    else -> {
+                                        show = true
+                                        dialogTitle = "Alerta"
+                                        dialogText = "Error al registrar: ${exception?.message}"
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        // Alertar si hay campos vacíos.
+                        show = true
+                        dialogTitle = "Alerta"
+                        dialogText = "Todos los campos son Obligatorios"
+                    }
                 }
-            }
-        }, // fillMaxWidth hace que el botón se expanda al ancho de la pantalla.
+            },
             modifier = Modifier.fillMaxWidth().height(48.dp).padding(horizontal = 32.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Green)) {
+            colors = ButtonDefaults.buttonColors(containerColor = Green)
+        ) {
             Text("Sign Up") // Texto del botón.
         }
 
-        Spacer(Modifier.height(40.dp)) // Espaciador para separar el botón del siguiente elemento.
+        Spacer(Modifier.height(40.dp)) // Espaciador final.
 
-        // Llama a la función 'mensaje' para mostrar el diálogo de alerta.
-        mensaje(show, cerrar = { show = false }, dialogTitle, dialogText)
+        // Diálogo de alerta.
+        if (show) {
+            AlertDialog(
+                onDismissRequest = { show = false }, // Cerrar el diálogo al tocar fuera.
+                title = { Text(dialogTitle, color = Black) },
+                text = { Text(dialogText, color = Black) },
+                confirmButton = {
+                    Button(onClick = { show = false }) {
+                        Text("Aceptar") // Texto del botón de aceptar.
+                    }
+                }
+            )
+        }
     }
 }
-
-
