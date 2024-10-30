@@ -32,6 +32,7 @@ fun Navegacion(navHostController: NavHostController, auth: FirebaseAuth) {
             Signup(auth, navHostController)
         }
 
+
         composable("Menu") {
             Menus(auth, navHostController)
         }

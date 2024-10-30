@@ -1,8 +1,6 @@
 package com.example.patitasvivas.Presentacion.Menu
 
 import ClinicasScreen
-
-//import PantallaInicio
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,23 +22,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-//import com.example.patitasvivas.PantallaInicio
 import com.example.patitasvivas.Presentacion.ConsejosCuidadoScreen
 import com.example.patitasvivas.Presentacion.GestionPet.Mascotasenadpocionajenas
 import com.example.patitasvivas.Presentacion.GraciasScreen
 import com.example.patitasvivas.Presentacion.PantallaInicial.MostrarMascotas
 import com.example.patitasvivas.Presentacion.PantallaInicio
-//import com.example.patitasvivas.Presentacion.PantallaInicio.
-//import com.example.patitasvivas.Presentacion.PantallaInicio.InicioPantalla
+import com.example.patitasvivas.Presentacion.chat.ui.ChatScreen
+import com.example.patitasvivas.Presentacion.chat.viewmodel.ChatViewModel
 import com.example.patitasvivas.Presentacion.quitaradopcion.QuitarAdopcion
 import com.example.patitasvivas.Presentacion.serviciosprestados.MisServicios
 import com.example.patitasvivas.Presentacion.serviciosprestados.OfferServiceScreen
 import com.example.patitasvivas.Presentacion.serviciosprestados.ServiciosAjenos
 import com.example.patitasvivas.R
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun Menus(auth: FirebaseAuth, navHostController: NavHostController){
@@ -255,6 +254,21 @@ fun barra(auth: FirebaseAuth) {
                             .padding(10.dp)
                     )
                     Text(
+                        text = "Chat",
+                        color = Color.Black,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .fillMaxWidth()
+                            .background(Color.LightGray.copy(alpha = 0.3f), shape = RoundedCornerShape(8.dp))
+                            .clickable {
+                                navController.navigate("Chat")
+                            }
+                            .padding(10.dp)
+                    )
+
+                    Text(
                         text = "Cerrar Sesión",
                         color = Color.Black,
                         fontSize = 20.sp,
@@ -430,8 +444,21 @@ fun barra(auth: FirebaseAuth) {
                     ) {
                         ClinicasScreen()
                     }
+                }
+
+                composable(route = "Chat") {
+                    Box(
+                        modifier = Modifier
+                            .padding(contentPadding)
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        ChatScreen("NAME", viewModel = viewModel())
+                    }
+
 
                 }
+
                 composable("Cerrar Sesión") {
                     Box(
                         modifier = Modifier
