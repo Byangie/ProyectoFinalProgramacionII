@@ -81,11 +81,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.androidx.navigation.compose)
     implementation("com.google.auth:google-auth-library-oauth2-http:1.9.0")
-    implementation ("androidx.compose.foundation:foundation:1.4.0-alpha02")
-    implementation ("androidx.compose.material3:material3:<latest-version>")
-    implementation ("androidx.compose.ui:ui:<latest-version>")
-    implementation("io.coil-kt:coil-compose:2.3.0")
-    // Verifica que sea la última versión disponible
+    implementation ("androidx.compose.foundation:foundation:1.4.0-alpha02") // Verifica que sea la última versión disponible
 
     dependencies {
         implementation ("androidx.compose.ui:ui:<version>")

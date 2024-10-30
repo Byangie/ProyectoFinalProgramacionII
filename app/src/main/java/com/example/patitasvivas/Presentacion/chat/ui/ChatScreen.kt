@@ -129,50 +129,53 @@ fun MessageInput(viewModel: ChatViewModel, chatId: String, userId: String) {
                     .width(90.dp) // Ancho fijo para el botón
             ) {
                 Text("Enviar", color = Color.White) // Color del texto del botón
-            }
-        }
-    }
-}
 
-@Composable
-fun MessageItem(message: Message) {
-    val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-    val formattedTime = dateFormat.format(Date(message.timestamp))
+                            }
+                        }
+                    }
+                }
 
-    val isCurrentUser = message.senderId == Firebase.auth.currentUser?.uid
-    val backgroundColor = if (isCurrentUser) Color(0xFF81D4FA) else Color(0xFF6200EA)
-    val textColor = if (isCurrentUser) Color.Black else Color.White
+                @Composable
+                fun MessageItem(message: Message) {
+                    val dateFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+                    val formattedTime = dateFormat.format(Date(message.timestamp))
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalArrangement = if (isCurrentUser) Arrangement.End else Arrangement.Start
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(5.dp)
-                .background(backgroundColor, MaterialTheme.shapes.medium)
-                .border(BorderStroke(1.dp, Color.LightGray), MaterialTheme.shapes.medium)
-                .padding(7.dp)
-                .widthIn(max = 200.dp) // Ancho máximo del cuadro
-        ) {
-            Text(
-                text = message.email,
-                style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
-                color = textColor
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(
-                text = message.text,
-                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 14.sp),
-                color = textColor
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(
-                text = formattedTime,
-                style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
-                color = textColor
-            )
-        }
-    }
-}
+
+                    val isCurrentUser = message.senderId == Firebase.auth.currentUser?.uid
+                    val backgroundColor = if (isCurrentUser) Color(0xFF81D4FA) else Color(0xFF6200EA)
+                    val textColor = if (isCurrentUser) Color.Black else Color.White
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = if (isCurrentUser) Arrangement.End else Arrangement.Start
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .padding(5.dp)
+                                .background(backgroundColor, MaterialTheme.shapes.medium)
+                                .border(BorderStroke(1.dp, Color.LightGray), MaterialTheme.shapes.medium)
+                                .padding(7.dp)
+                                .widthIn(max = 200.dp) // Ancho máximo del cuadro
+                        ) {
+                            Text(
+                                text = message.email,
+                                style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
+                                color = textColor
+                            )
+                            Spacer(modifier = Modifier.height(2.dp))
+                            Text(
+                                text = message.text,
+                                style = MaterialTheme.typography.bodyLarge.copy(fontSize = 14.sp),
+                                color = textColor
+                            )
+                            Spacer(modifier = Modifier.height(2.dp))
+                            Text(
+                                text = formattedTime,
+                                style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp),
+                                color = textColor
+                            )
+                        }
+
+                        }
+                    }

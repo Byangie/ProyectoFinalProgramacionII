@@ -23,7 +23,7 @@ class NotificationTask(private val context: Context, private val Nombre:String,p
             null
         }
     }
-
+// Error al obtener el token de acceso
     override fun onPostExecute(accessToken: String?) {
         if (accessToken != null) {
             enviarNotificacion(accessToken)
@@ -45,7 +45,7 @@ class NotificationTask(private val context: Context, private val Nombre:String,p
             }
         }
         """
-
+//crea una instancia del cliente HTTP de OkHttp, que se encargará de gestionar la conexión y enviar la solicitud.
         val client = OkHttpClient()
         val body = RequestBody.create("application/json; charset=utf-8".toMediaType(), json)
         val request = Request.Builder()
@@ -54,7 +54,7 @@ class NotificationTask(private val context: Context, private val Nombre:String,p
             .addHeader("Authorization", "Bearer $accessToken")
             .addHeader("Content-Type", "application/json")
             .build()
-
+//el cliente realiza la solicitud de forma asíncrona.
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()

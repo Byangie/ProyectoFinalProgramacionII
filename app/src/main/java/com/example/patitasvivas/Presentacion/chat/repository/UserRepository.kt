@@ -1,5 +1,6 @@
 package com.example.patitasvivas.Presentacion.chat.repository
 
+
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -12,11 +13,13 @@ class UserRepository {
         )
 
         db.child("UsersProfile").child(userId).setValue(userProfile)
-            .addOnSuccessListener {
-                // Registro exitoso
+
+                .addOnSuccessListener {
+                    // Registro exitoso
+                }
+                    .addOnFailureListener { e ->
+                        // Manejo de errores
+                    }
             }
-            .addOnFailureListener { e ->
-                // Manejo de errores
-            }
-    }
-}
+        }
+

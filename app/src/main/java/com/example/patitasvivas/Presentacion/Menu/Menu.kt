@@ -47,6 +47,7 @@ import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+
 @Composable
 fun Menus(auth: FirebaseAuth, navHostController: NavHostController) {
     barra(auth, navHostController)
@@ -78,6 +79,7 @@ fun barra(auth: FirebaseAuth, navHostController: NavHostController) {
                         .padding(16.dp)
                         .verticalScroll(rememberScrollState()) // Añadir desplazamiento
                 ) {
+
                     // Menú de navegación
                     MenuItem(text = "Inicio", navController, "Contenido principal", drawerState, scope)
                     MenuItem(text = "Mis mascotas", navController, "Mis mascotas", drawerState, scope)
@@ -92,6 +94,7 @@ fun barra(auth: FirebaseAuth, navHostController: NavHostController) {
                     MenuItem(text = "Chat", navController, "Chat", drawerState, scope)
                     MenuItem(text = "Cerrar Sesión", navController, "Cerrar Sesión", drawerState, scope)
                     MenuItem(text = "Unamas", navController, "bye", drawerState, scope)
+
                 }
             }
         }
@@ -230,8 +233,10 @@ fun barra(auth: FirebaseAuth, navHostController: NavHostController) {
                     ) {
                         ClinicasScreen()
                     }
+
                 }
                 composable("Chat") {
+
                     Box(
                         modifier = Modifier
                             .padding(contentPadding)
