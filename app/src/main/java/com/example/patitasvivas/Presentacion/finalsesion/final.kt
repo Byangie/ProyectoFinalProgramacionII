@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.patitasvivas.ui.theme.Black
-
+// Cierre de Sesion app
 @Composable
 fun GraciasScreen(onCerrarSesion: () -> Unit) {
     Column(

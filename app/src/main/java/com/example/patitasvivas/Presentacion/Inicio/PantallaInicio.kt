@@ -36,7 +36,7 @@ fun Inicio(
                     )
                 )
             ),
-        horizontalAlignment = Alignment.CenterHorizontally
+    horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.weight(1f))
         Image(
@@ -100,6 +100,7 @@ fun Inicio(
         }
 
         Spacer(modifier = Modifier.weight(1f)) // Espacio flexible al final
+
     }
 }
 

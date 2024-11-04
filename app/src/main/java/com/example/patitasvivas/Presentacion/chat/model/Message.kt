@@ -5,4 +5,5 @@ data class Message(
     val text: String = "",
     val timestamp: Long = 0L,
     var email: String = "" // Asegúrate de que sea var
+
 )

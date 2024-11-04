@@ -96,4 +96,5 @@ class ChatViewModel : ViewModel() {
             errorMessage.value = "El mensaje no puede estar vacío."
         }
     }
-}
+
+    }

@@ -4,12 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,140 +34,89 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 @Composable
 fun Signup(auth: FirebaseAuth, navHostController: NavHostController) {
-    var scroll = rememberScrollState() // Estado para el desplazamiento vertical.
-    var email by remember { mutableStateOf("") } // Estado para almacenar el email.
-    var contraseña by remember { mutableStateOf("") } // Estado para almacenar la contraseña.
-    var experiencia by remember { mutableStateOf("") } // Estado para almacenar la experiencia del usuario.
-    var interes by remember { mutableStateOf("") } // Estado para almacenar los intereses del usuario.
-    var nombre by remember { mutableStateOf("") } // Estado para almacenar el nombre del usuario.
-    var serviciosOfrecidos by remember { mutableStateOf("") } // Estado para almacenar los servicios ofrecidos.
-    var serviciosInteres by remember { mutableStateOf("") } // Estado para almacenar los servicios de interés.
-    var dialogTitle by remember { mutableStateOf("") } // Título del diálogo de alerta.
-    var dialogText by remember { mutableStateOf("") } // Texto del diálogo de alerta.
-    var show by rememberSaveable { mutableStateOf(false) } // Estado para controlar la visibilidad del diálogo de alerta.
-    var idUsuario by remember { mutableStateOf("") } // Estado para almacenar el ID del usuario.
+    var scroll = rememberScrollState()
+    var email by remember { mutableStateOf("") }
+    var contraseña by remember { mutableStateOf("") }
+    var experiencia by remember { mutableStateOf("") }
+    var interes by remember { mutableStateOf("") }
+    var nombre by remember { mutableStateOf("") }
+    var serviciosOfrecidos by remember { mutableStateOf("") }
+    var serviciosInteres by remember { mutableStateOf("") }
+    var dialogTitle by remember { mutableStateOf("") }
+    var dialogText by remember { mutableStateOf("") }
+    var show by rememberSaveable { mutableStateOf(false) }
+    var idUsuario by remember { mutableStateOf("") }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Black)
-            .verticalScroll(scroll),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(Brush.verticalGradient(colors = listOf(Color(0xFF1A1A2E), Color(0xFF16213E))))
+            .verticalScroll(scroll)
     ) {
-        Row() {
-            // Botón para volver a la pantalla anterior.
-            Icon(
-                painter = painterResource(id = R.drawable.back),
-                contentDescription = "",
-                tint = White,
-                modifier = Modifier.padding(24.dp).clickable { navHostController.popBackStack() }
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.back),
+                    contentDescription = "Regresar",
+                    tint = Color.White,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clickable { navHostController.popBackStack() }
+                )
+                Spacer(Modifier.weight(1f))
+            }
+
+            Text(
+                text = "Registro",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 36.sp,
+                modifier = Modifier.padding(vertical = 16.dp)
             )
-            Spacer(Modifier.weight(1f)) // Espaciador para separar el icono del borde.
-        }
 
-        // TextField para el email.
-        Text("Email", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(
-            value = email,
-            onValueChange = { email = it },
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
-        )
+            // TextField para el email.
+            CustomTextField("Email", email) { email = it }
+            CustomTextField("Contraseña", contraseña) { contraseña = it }
+            CustomTextField("Experiencia", experiencia) { experiencia = it }
+            CustomTextField("Interés", interes) { interes = it }
+            CustomTextField("Nombre", nombre) { nombre = it }
+            CustomTextField("Servicios Ofrecidos", serviciosOfrecidos) { serviciosOfrecidos = it }
+            CustomTextField("Servicios Interés", serviciosInteres) { serviciosInteres = it }
 
-        Spacer(Modifier.height(40.dp)) // Espaciador para separar campos.
+            Spacer(Modifier.height(32.dp))
 
-        // TextField para la contraseña.
-        Text("Contraseña", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(
-            value = contraseña,
-            onValueChange = { contraseña = it },
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
-        )
-
-        Spacer(Modifier.height(40.dp))
-
-        // TextField para la experiencia.
-        Text("Experiencia", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(
-            value = experiencia,
-            onValueChange = { experiencia = it },
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
-        )
-
-        Spacer(Modifier.height(40.dp))
-
-        // TextField para el interés.
-        Text("Interés", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(
-            value = interes,
-            onValueChange = { interes = it },
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
-        )
-
-        Spacer(Modifier.height(40.dp))
-
-        // TextField para el nombre.
-        Text("Nombre", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(
-            value = nombre,
-            onValueChange = { nombre = it },
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
-        )
-
-        Spacer(Modifier.height(40.dp))
-
-        // TextField para los servicios ofrecidos.
-        Text("Servicios Ofrecidos", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(
-            value = serviciosOfrecidos,
-            onValueChange = { serviciosOfrecidos = it },
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
-        )
-
-        Spacer(Modifier.height(40.dp))
-
-        // TextField para los servicios de interés.
-        Text("Servicios Interés", color = White, fontWeight = FontWeight.Bold, fontSize = 40.sp)
-        TextField(
-            value = serviciosInteres,
-            onValueChange = { serviciosInteres = it },
-            modifier = Modifier.fillMaxWidth(),
-            colors = TextFieldDefaults.colors(unfocusedContainerColor = UnselectedField, focusedContainerColor = SelectedField)
-        )
-
-        // Lógica del botón para registrarse.
-        Spacer(Modifier.height(40.dp))
-        Button(
-            onClick = {
-                // Verificar que la contraseña tenga al menos 8 caracteres.
-                if (contraseña.length < 8) {
-                    show = true
-                    dialogTitle = "Alerta"
-                    dialogText = "La contraseña debe tener al menos 8 caracteres"
-                } else {
-                    if (email.isNotEmpty() && contraseña.isNotEmpty()) { // Verificar que email y contraseña no estén vacíos.
+            // Botón para registrarse.
+            Button(
+                onClick = {
+                    // Verificar que la contraseña tenga al menos 8 caracteres.
+                    if (contraseña.length < 8) {
+                        show = true
+                        dialogTitle = "Alerta"
+                        dialogText = "La contraseña debe tener al menos 8 caracteres"
+                    } else if (email.isNotEmpty() && contraseña.isNotEmpty()) {
                         auth.createUserWithEmailAndPassword(email, contraseña).addOnCompleteListener { task ->
-                            if (task.isSuccessful) { // Si el registro es exitoso.
-                                idUsuario = auth.currentUser?.uid.toString() // Obtener el ID del usuario.
+                            if (task.isSuccessful) {
+                                idUsuario = auth.currentUser?.uid.toString()
                                 if (experiencia.isNotEmpty() && serviciosInteres.isNotEmpty() && interes.isNotEmpty() && nombre.isNotEmpty() && serviciosOfrecidos.isNotEmpty()) {
-                                    // Conectar a Firestore y crear el registro de usuario.
                                     val db = FirebaseFirestore.getInstance().collection("UsersProfile")
-                                    val dat = DatosUsuario( // Crear la instancia de los datos del usuario.
+                                    val dat = DatosUsuario(
+                                        nombre,
+                                        email,
                                         experiencia,
                                         interes,
-                                        nombre, // Guardar el nombre en vez de "usuario desconocido".
-                                        serviciosOfrecidos,
                                         serviciosInteres,
-                                        email,
+                                        serviciosOfrecidos,
                                         idUsuario
                                     )
-                                    db.document(idUsuario).set(dat) // Guardar el nuevo registro en Firestore utilizando el ID del usuario.
-                                    // Mostrar mensaje de éxito.
+                                    db.document(idUsuario).set(dat)
                                     show = true
                                     dialogTitle = "Alerta"
                                     dialogText = "Registro Exitoso"
@@ -175,62 +127,92 @@ fun Signup(auth: FirebaseAuth, navHostController: NavHostController) {
                                     serviciosOfrecidos = ""
                                     serviciosInteres = ""
                                     email = ""
+                                    contraseña=""
                                 } else {
-                                    // Alertar si hay campos vacíos.
                                     show = true
                                     dialogTitle = "Alerta"
                                     dialogText = "Todos los campos son Obligatorios"
                                 }
                             } else {
-                                // Manejar errores durante el registro.
-                                val exception = task.exception
-                                when (exception) {
-                                    is FirebaseAuthWeakPasswordException -> {
-                                        show = true
-                                        dialogTitle = "Alerta"
-                                        dialogText = "La contraseña es demasiado débil"
-                                    }
-                                    is FirebaseAuthUserCollisionException -> {
-                                        show = true
-                                        dialogTitle = "Alerta"
-                                        dialogText = "El correo ya está registrado"
-                                    }
-                                    else -> {
-                                        show = true
-                                        dialogTitle = "Alerta"
-                                        dialogText = "Error al registrar: ${exception?.message}"
-                                    }
-                                }
+                                handleRegistrationError(task.exception, { newShow, newDialogTitle, newDialogText ->
+                                    show = newShow
+                                    dialogTitle = newDialogTitle
+                                    dialogText = newDialogText
+                                })
                             }
                         }
                     } else {
-                        // Alertar si hay campos vacíos.
                         show = true
                         dialogTitle = "Alerta"
                         dialogText = "Todos los campos son Obligatorios"
                     }
-                }
-            },
-            modifier = Modifier.fillMaxWidth().height(48.dp).padding(horizontal = 32.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Green)
-        ) {
-            Text("Sign Up") // Texto del botón.
-        }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(horizontal = 16.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))
+            ) {
+                Text("Registrarse", color = Color.White)
+            }
 
-        Spacer(Modifier.height(40.dp)) // Espaciador final.
-
-        // Diálogo de alerta.
-        if (show) {
-            AlertDialog(
-                onDismissRequest = { show = false }, // Cerrar el diálogo al tocar fuera.
-                title = { Text(dialogTitle, color = Black) },
-                text = { Text(dialogText, color = Black) },
-                confirmButton = {
-                    Button(onClick = { show = false }) {
-                        Text("Aceptar") // Texto del botón de aceptar.
+            // Diálogo de alerta.
+            if (show) {
+                AlertDialog(
+                    onDismissRequest = { show = false },
+                    title = { Text(dialogTitle, color = Color.Black) },
+                    text = { Text(dialogText, color = Color.Black) },
+                    confirmButton = {
+                        Button(onClick = { show = false }) {
+                            Text("Aceptar")
+                        }
                     }
-                }
-            )
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomTextField(label: String, value: String, onValueChange: (String) -> Unit) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = label,
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        TextField(
+            value = value,
+            onValueChange = onValueChange,
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFF2E2E2E),
+                focusedContainerColor = Color(0xFF3B3B3B),
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent
+            ),
+            shape = RoundedCornerShape(10.dp),
+            placeholder = {
+                Text(text = "Introduce $label", color = Color.Gray)
+            }
+        )
+        Spacer(modifier = Modifier.height(16.dp)) // Espacio entre campos
+    }
+}
+
+private fun handleRegistrationError(exception: Exception?, updateDialogState: (Boolean, String, String) -> Unit) {
+    // Manejar errores durante el registro.
+    when (exception) {
+        is FirebaseAuthWeakPasswordException -> {
+            updateDialogState(true, "Alerta", "La contraseña es demasiado débil")
+        }
+        is FirebaseAuthUserCollisionException -> {
+            updateDialogState(true, "Alerta", "El correo ya está registrado")
+        }
+        else -> {
+            updateDialogState(true, "Alerta", "Error al registrar: ${exception?.message}")
         }
     }
 }

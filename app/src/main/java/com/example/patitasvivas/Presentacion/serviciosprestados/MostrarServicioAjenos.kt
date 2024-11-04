@@ -200,7 +200,7 @@ fun ServiciosCardajenos(name: String, type: String, description: String, cost: S
 // Realizamos una consulta para verificar si el servicio ya ha sido adquirido por el usuario
             db.collection("ServiciosAdquiridos")
                 .whereEqualTo("idUsuario", idUsuario) // Filtramos por el ID del usuario
-                .whereEqualTo("idServicioqueofrecieron", idServicio) // Filtramos por el ID del servicio ofrecido
+                .whereEqualTo("idServicioqueofrecieron", idServicio) // oFiltramos por el ID del servicio ofrecido
                 .get()
                 .addOnSuccessListener { documents ->
                     if (documents.isEmpty) {
